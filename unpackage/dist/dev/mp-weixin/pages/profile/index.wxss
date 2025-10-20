@@ -1,0 +1,72 @@
+
+.my-page.data-v-201c0da5 {
+		background-color: #f8f8f8;
+		min-height: 100vh;
+}
+.user-info.data-v-201c0da5 {
+		background: #fff;
+		padding: 40rpx 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+}
+.avatar.data-v-201c0da5 {
+		width: 100rpx;
+		height: 100rpx;
+		border-radius: 50%;
+		background: #ccc;
+}
+.nickname.data-v-201c0da5 {
+		margin-top: 20rpx;
+		font-size: 32rpx;
+		color: #333;
+}
+.section.data-v-201c0da5 {
+		background: #fff;
+		margin-top: 20rpx;
+		padding: 20rpx;
+}
+.section-header.data-v-201c0da5 {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 20rpx;
+}
+.title.data-v-201c0da5 {
+		font-weight: bold;
+		font-size: 30rpx;
+}
+.more.data-v-201c0da5 {
+		color: #999;
+		font-size: 26rpx;
+}
+.order-status.data-v-201c0da5 {
+		display: flex;
+		justify-content: space-around;
+}
+.status-item.data-v-201c0da5 {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+}
+.status-icon.data-v-201c0da5 {
+		width: 50rpx;
+		height: 50rpx;
+}
+.status-text.data-v-201c0da5 {
+		margin-top: 10rpx;
+		font-size: 24rpx;
+}
+.menu-item.data-v-201c0da5 {
+		display: flex;
+		align-items: center;
+		padding: 20rpx 0;
+		border-bottom: 1px solid #f1f1f1;
+}
+.menu-icon.data-v-201c0da5 {
+		width: 40rpx;
+		height: 40rpx;
+		margin-right: 20rpx;
+}
+.menu-text.data-v-201c0da5 {
+		font-size: 28rpx;
+}

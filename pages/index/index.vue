@@ -1,5 +1,9 @@
 <template>
 	<view class="index">
+		<!-- 自定义导航栏 -->
+		<view class="custom-nav" :style="{ paddingTop: statusBarHeight + 'px' }">
+			<image class="logo" src="/static/tabbar/logo.png" mode="widthFix" />
+		</view>
 		<view class="list-box">
 			<view class="list-item" v-for="(item,idx) in list" :key="idx">
 				<image :src="item.url" mode="widthFix"></image>
@@ -16,7 +20,7 @@
 		components: { CustomTabbar },
 		data() {
 			return {
-				title: 'Hello',
+				statusBarHeight: 0,
 				list: [
 					{
 						url: '/static/tabbar/list-01.png'
@@ -28,6 +32,8 @@
 			}
 		},
 		onLoad() {
+			const info = uni.getSystemInfoSync()
+			this.statusBarHeight = info.statusBarHeight // 动态适配刘海屏
 			this.getOrders()
 		},
 		methods: {
@@ -53,10 +59,21 @@
 	}
 	
 	.index{
+		.custom-nav {
+		  background: #fff;
+		  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+		  display: flex;
+		  align-items: center;
+		  image{
+			  width: 240rpx;
+			  margin: 12rpx 20rpx;
+		  }
+		}
 		.list-box{
 			display: flex;
 			flex-direction:  column;
 			padding: 20rpx;
+			gap: 40rpx;
 			image{
 				width: 100%;
 			}

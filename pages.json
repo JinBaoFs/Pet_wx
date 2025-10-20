@@ -15,24 +15,31 @@
 				"navigationBarBackgroundColor": "#ffffff",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/care/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"tabBar": {
-	  "custom": true,      // 开启自定义 tabBar
-	  "list": [
-	    {
-	      "pagePath": "pages/index/index",
-	      "text": "首页"
-	    },
-	    {
-	      "pagePath": "pages/care/index",
-	      "text": "订单"
-	    },
-	    {
-	      "pagePath": "pages/profile/index",
-	      "text": "我的"
-	    }
-	  ]
+		"custom": true, // 开启自定义 tabBar
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/care/index",
+				"text": "订单"
+			},
+			{
+				"pagePath": "pages/profile/index",
+				"text": "我的"
+			}
+		]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
