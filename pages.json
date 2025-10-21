@@ -25,6 +25,17 @@
 			}
 		}
 	],
+	"subPackages": [{
+			"root": "pages/goods",
+			"pages": [{
+					"path": "goods-detail",
+					"style": {
+						"navigationBarTitleText": "洗护详情"
+					}
+				}
+			]
+		}
+	],
 	"tabBar": {
 		"custom": true, // 开启自定义 tabBar
 		"list": [{
@@ -44,7 +55,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#F8F8F8"
 	},
 	"uniIdRouter": {}
