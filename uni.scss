@@ -15,14 +15,20 @@
 /* 颜色变量 */
 
 /* 行为相关颜色 */
+
+
 @import '@/uni_modules/uview-plus/theme.scss';
 $uni-color-primary: #007aff;
 $uni-color-success: #4cd964;
 $uni-color-warning: #f0ad4e;
 $uni-color-error: #dd524d;
+$u-input-placeholder-size: 24rpx;  // placeholder 字体大小
+$u-input-placeholder-color: #999;  // placeholder 颜色
+
+
 
 /* 文字基本颜色 */
-$uni-text-color:#333;//基本色
+$uni-text-color:#fc0;//基本色
 $uni-text-color-inverse:#fff;//反色
 $uni-text-color-grey:#999;//辅助灰色，如加载更多的提示信息
 $uni-text-color-placeholder: #808080;

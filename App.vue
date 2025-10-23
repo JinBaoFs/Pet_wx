@@ -12,6 +12,8 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	/*每个页面公共css */
+	@import "@/common/css/base.scss";
+	@import "@/common/css/uview.scss";
 </style>

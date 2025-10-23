@@ -27,10 +27,17 @@
 	],
 	"subPackages": [{
 			"root": "pages/goods",
-			"pages": [{
+			"pages": [
+				{
 					"path": "goods-detail",
 					"style": {
 						"navigationBarTitleText": "洗护详情"
+					}
+				},
+				{
+					"path": "create-order",
+					"style": {
+						"navigationBarTitleText": "填写订单"
 					}
 				}
 			]

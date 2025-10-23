@@ -14,6 +14,7 @@
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import CustomTabbar from '@/components/custom-tabbar.vue'
+import { useUserStore } from '@/stores/user'
 
 // 响应式数据
 const list = ref([

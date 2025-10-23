@@ -44,6 +44,8 @@
 <script setup>
 	import { ref, computed } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
+	import { useCreateOrder } from '@/stores/order.js'
+	const createOrderStore = useCreateOrder()
 	
 	const infoData = ref({
 		url: '/static/tabbar/list-01.png',
@@ -109,7 +111,13 @@
 			return
 		}
 		
-		uni.showToast({title:"下单成功", icon: "none"});
+		createOrderStore.setOrderInfo({
+			...selectData.value,
+			weightLabel: currentWeightOption.value.label,
+			price: currentWeightOption.value.price,
+		})
+		
+		uni.navigateTo({ url:'/pages/goods/create-order'})
 	}
 	
 	// 生命周期函数
