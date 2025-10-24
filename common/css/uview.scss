@@ -1,4 +1,4 @@
-.u-cell__value,.uni-input-input,.uni-input-placeholder{
+.u-cell__value,.uni-input-input,.uni-input-placeholder,.uni-textarea-placeholder,.uni-textarea-textarea{
 	font-size: 24rpx!important;
 }
 
@@ -12,5 +12,9 @@
 }
 
 .u-line{
-	border: none!important;;
+	border: none!important;
+}
+
+.u-textarea{
+	border: 2rpx solid rgba(221, 221, 221, 1)!important;
 }

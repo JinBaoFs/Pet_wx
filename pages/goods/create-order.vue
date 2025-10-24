@@ -21,6 +21,14 @@
 			<!-- 上门服务时间 -->
 			<up-cell isLink :border="false" class="cell-item" title="*上门服务时间" is-link @click="chooseStaff"
 				:value="staff || '未选择'"></up-cell>
+			<up-datetime-picker
+				:show="pageData.dateTimePickShow"
+				v-model="pageData.serverTime"
+				:minDate="1587524800000"
+				:maxDate="1786778555000"
+				:filter="timeFilter"
+				mode="datetime"
+			></up-datetime-picker>
 
 			<!-- 洗护师选择 -->
 			<up-cell isLink :border="false" class="cell-item" title="*洗护师" is-link @click="chooseCleaner"
@@ -46,7 +54,7 @@
 					</view>
 				</view>
 			</picker>
-			
+
 			<picker :range="options" @change="onPickerChange">
 				<view class="pet-item">
 					<view class="item-label">*宠物毛色</view>
@@ -56,7 +64,7 @@
 					</view>
 				</view>
 			</picker>
-			
+
 			<picker :range="options" @change="onPickerChange">
 				<view class="pet-item">
 					<view class="item-label">*宠物年龄</view>
@@ -66,7 +74,7 @@
 					</view>
 				</view>
 			</picker>
-			
+
 			<picker :range="options" @change="onPickerChange">
 				<view class="pet-item">
 					<view class="item-label">*宠物性别</view>
@@ -76,29 +84,72 @@
 					</view>
 				</view>
 			</picker>
+
+			<view class="pet-item">
+				<view class="item-label">*宠物图片</view>
+				<div class="upload-container">
+					<ImageUpload v-model="images" :upload-url="uploadUrl" :max-count="1" token="test-token"
+						@success="onSuccess" />
+				</div>
+			</view>
 		</view>
 
-		<!-- 备注 -->
-		<u-textarea v-model="remark" placeholder="请填写注意事项（备注）" auto-height />
+		<view class="desc-container">
+			<div class="desc-title">洗护注意事项（备注）</div>
+			<up-textarea v-model="pageData.description" placeholder="请输入内容"></up-textarea>
+		</view>
 
 		<!-- 底部提交 -->
 		<view class="footer">
-			<view class="total">总价: ¥58</view>
-			<u-button type="primary" @click="submitOrder">立即预约</u-button>
+			<u-button type="primary" color="#e9b10b" @click="submitOrder">立即预约</u-button>
 		</view>
 
 	</view>
 </template>
 
 <script setup>
-	import {
-		ref
-	} from 'vue'
+	import { ref, reactive } from 'vue'
 	import {
 		useCreateOrder
 	} from '@/stores/order.js'
+	import ImageUpload from '@/components/image-upload.vue'
 	const createOrderStore = useCreateOrder()
 
+	const images = ref([])
+	const uploadUrl = 'https://your-server.com/upload'
+
+	const onSuccess = (data) => {
+		console.log('上传成功：', data)
+	}
+	const submit = () => {
+		console.log('最终图片数据:', images.value)
+	}
+	
+	const pageData = reactive({
+		dateTimePickShow: false,
+		serverTime: null,
+		description: ''
+	})
+	
+	const otherData = reactive({
+		minDate: '',
+		maxDate: ''
+	})
+	
+	// 核心：过滤小时选项
+	const timeFilter = (type, options) => {
+	  if (type === 'hour') {
+		// 只显示 7~18 点
+		const filtered = options.filter(opt => opt.value >= 7 && opt.value <= 18)
+		// 防止返回空数组
+		return filtered.length ? filtered : options
+	  }
+	  return options
+	}
+
+
+	
+	// 监听页面返回时的地址更新
 	const address = ref('湖南省')
 	const staff = ref('')
 	const cleaner = ref('')
@@ -108,7 +159,7 @@
 	const petColor = ref('')
 	const petAge = ref('')
 	const remark = ref('')
-	
+
 	const options = ['选项1', '选项2', '选项3']
 
 	// 下拉选项
@@ -156,17 +207,23 @@
 
 	// 点击事件
 	const chooseAddress = () => {
-		uni.showToast({
-			title: '选择地址',
-			icon: 'none'
+		uni.navigateTo({
+			url: '/pages/user/address?type=1',
+			success: (res) => {
+			  // 接收从子页返回的数据
+			  res.eventChannel.on('returnAddress', (data) => {
+				address.value = data
+			  })
+			}
 		})
 	}
 
 	const chooseStaff = () => {
 		uni.showToast({
-			title: '选择上门服务师',
+			title: '选择上门服务时间',
 			icon: 'none'
 		})
+		pageData.dateTimePickShow = true;
 	}
 
 	const chooseCleaner = () => {
@@ -182,12 +239,16 @@
 			icon: 'success'
 		})
 	}
+	
+	const onPickerChange = (val) => {
+		
+	}
 </script>
 
 <style scoped lang="scss">
 	.page-container {
 		background-color: #f8f8f8;
-		padding-bottom: 120rpx;
+		padding-bottom: 160rpx;
 	}
 
 	.goods-card {
@@ -266,8 +327,8 @@
 			border: 2rpx rgba(221, 221, 221, 1) solid;
 			font-size: 24rpx;
 		}
-		
-		.picker-container{
+
+		.picker-container {
 			flex: 1;
 			border: 2rpx rgba(221, 221, 221, 1) solid;
 			font-size: 24rpx;
@@ -277,15 +338,16 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			.tips{
+
+			.tips {
 				color: rgb(192, 196, 204);
 			}
 		}
 
-	}
+		.upload-container {
+			flex: 1;
+		}
 
-	.radio-group {
-		margin-bottom: 10px;
 	}
 
 	.footer {
@@ -300,6 +362,21 @@
 		align-items: center;
 		border-top: 1px solid #eee;
 	}
+
+	.desc-container {
+		background-color: #fff;
+		margin-top: 20rpx;
+		padding: 20rpx;
+
+		.desc-title {
+			margin-bottom: 20rpx;
+			color: #354D6E;
+			font-size: 28rpx;
+			font-weight: 500;
+
+		}
+	}
+
 
 	.total {
 		font-weight: bold;

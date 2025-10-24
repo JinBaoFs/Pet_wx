@@ -41,6 +41,23 @@
 					}
 				}
 			]
+		},
+		{
+			"root": "pages/user",
+			"pages": [
+				{
+					"path": "address",
+					"style": {
+						"navigationBarTitleText": "地址管理"
+					}
+				},
+				{
+					"path": "addAddress",
+					"style": {
+						"navigationBarTitleText": "添加地址"
+					}
+				}
+			]
 		}
 	],
 	"tabBar": {
