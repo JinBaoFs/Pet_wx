@@ -19,20 +19,47 @@
 				:value="address || '未选择'"></up-cell>
 
 			<!-- 上门服务时间 -->
-			<up-cell isLink :border="false" class="cell-item" title="*上门服务时间" is-link @click="chooseStaff"
-				:value="staff || '未选择'"></up-cell>
-			<up-datetime-picker
-				:show="pageData.dateTimePickShow"
-				v-model="pageData.serverTime"
-				:minDate="1587524800000"
-				:maxDate="1786778555000"
-				:filter="timeFilter"
+			<up-cell isLink :border="false" class="cell-item" title="*上门服务时间" is-link @click="otherData.dateTimePickShow = true"
+				:value="formatTimestampToYMDH(pageData.serverTime) || '未选择'"></up-cell>
+			<up-datetime-picker :show="otherData.dateTimePickShow" v-model="pageData.serverTime"
+				:minDate="otherData.minDate" :maxDate="otherData.maxDate" :filter="timeFilter"
+				@cancel="() => (otherData.dateTimePickShow = false)"
+				@confirm="serverDateConfirm"
 				mode="datetime"
+				confirmColor="#FFB10C"
 			></up-datetime-picker>
 
 			<!-- 洗护师选择 -->
-			<up-cell isLink :border="false" class="cell-item" title="*洗护师" is-link @click="chooseCleaner"
-				:value="cleaner || '未选择'"></up-cell>
+			<up-cell isLink :border="false" class="cell-item" title="*洗护师" is-link @click="handleOpenCare"
+				:value="pageData.careId ? `${pageData.careId}号` : '未选择'"></up-cell>
+				
+			<up-popup :show="otherData.carePopupShow" mode="bottom"  @close="otherData.carePopupShow = false">
+				<view class="care-container">
+					<view class="care-title">选择空闲洗护师</view>
+					<template v-if="!otherData.careLoading">
+						<view class="care-list" v-if="otherData.careList && otherData.careList.length">
+							<view class="care-item" v-for="(item,idx) in otherData.careList" :key="idx" @click="handleSelectCare(item)">
+								<view class="item-l">
+									<view class="idx">{{item.id}}号</view>
+									<view class="logo"></view>
+								</view>
+								<view class="item-c">
+									累计订单：110
+								</view>
+								<view class="item-r">
+									<view class="see-btn">选择</view>
+								</view>
+							</view>
+						</view>
+						<view class="empty" v-else>
+							很抱歉，您选择的时间暂无空闲洗护师，或您所选择的地址洗护师紧缺，您换个时间或者换个位置再试试哦~
+						</view>
+					</template>
+					<view class="loading-container" v-else>
+						<up-loading-icon mode="semicircle" color="#FFB10C"></up-loading-icon>
+					</view>
+				</view>
+			</up-popup>
 		</up-cell-group>
 
 		<!-- 宠物信息补充 -->
@@ -101,14 +128,17 @@
 
 		<!-- 底部提交 -->
 		<view class="footer">
-			<u-button type="primary" color="#e9b10b" @click="submitOrder">立即预约</u-button>
+			<u-button type="primary" color="#FEE126" :customStyle="{color: '#000', fontWeight: 500}" @click="submitOrder" shape="circle">立即预约</u-button>
 		</view>
 
 	</view>
 </template>
 
 <script setup>
-	import { ref, reactive } from 'vue'
+	import {
+		ref,
+		reactive
+	} from 'vue'
 	import {
 		useCreateOrder
 	} from '@/stores/order.js'
@@ -124,31 +154,70 @@
 	const submit = () => {
 		console.log('最终图片数据:', images.value)
 	}
-	
+
 	const pageData = reactive({
-		dateTimePickShow: false,
 		serverTime: null,
-		description: ''
+		description: '',
+		careId: null,
 	})
-	
+
 	const otherData = reactive({
-		minDate: '',
-		maxDate: ''
+		minDate: Date.now() + 2 * 60 * 60 * 1000,
+		maxDate: Date.now() + 30 * 24 * 60 * 60 * 1000,
+		dateTimePickshow: false,
+		carePopupShow: false,
+		careList: [], // 空闲洗护师
+		careLoading: false,
 	})
-	
+
 	// 核心：过滤小时选项
 	const timeFilter = (type, options) => {
-	  if (type === 'hour') {
-		// 只显示 7~18 点
-		const filtered = options.filter(opt => opt.value >= 7 && opt.value <= 18)
-		// 防止返回空数组
-		return filtered.length ? filtered : options
-	  }
-	  return options
+		if (!options || options.length === 0) return options
+		if (type === 'hour') {
+			const filtered = options.filter(opt => {
+				const hour = Number(opt)
+				return (hour >= 7 && hour <= 18 && hour % 2 != 0)
+			})
+			return filtered.length ? filtered : options
+		}
+		
+		if(type === 'minute') return ['00']
+		return options
+	}
+	
+	//格式化日期
+	const formatTimestampToYMDH = (timestamp) => {
+		if(!timestamp) return timestamp;
+		
+	    const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
+	    const year = date.getFullYear();
+	    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从0开始
+	    const day = String(date.getDate()).padStart(2, '0');
+	    const hour = String(date.getHours()).padStart(2, '0');
+	    return `${year}/${month}/${day} ${Number(hour)}:00~${Number(hour)+2}:00`;
+	}
+
+	
+	const serverDateConfirm = (e) => {
+	  pageData.serverTime = e.value
+	  otherData.dateTimePickShow = false
+	}
+	
+	const handleOpenCare = () => {
+		otherData.careLoading = true;
+		otherData.carePopupShow = true;
+		setTimeout(()=>{
+			otherData.careList = [{id:5},{id:23},{id:72}]
+			otherData.careLoading = false;
+		},500)
+	}
+	
+	const handleSelectCare = (item) => {
+		pageData.careId = item.id;
+		otherData.carePopupShow = false;
 	}
 
 
-	
 	// 监听页面返回时的地址更新
 	const address = ref('湖南省')
 	const staff = ref('')
@@ -210,26 +279,11 @@
 		uni.navigateTo({
 			url: '/pages/user/address?type=1',
 			success: (res) => {
-			  // 接收从子页返回的数据
-			  res.eventChannel.on('returnAddress', (data) => {
-				address.value = data
-			  })
+				// 接收从子页返回的数据
+				res.eventChannel.on('returnAddress', (data) => {
+					address.value = data
+				})
 			}
-		})
-	}
-
-	const chooseStaff = () => {
-		uni.showToast({
-			title: '选择上门服务时间',
-			icon: 'none'
-		})
-		pageData.dateTimePickShow = true;
-	}
-
-	const chooseCleaner = () => {
-		uni.showToast({
-			title: '选择洗护师',
-			icon: 'none'
 		})
 	}
 
@@ -239,16 +293,16 @@
 			icon: 'success'
 		})
 	}
-	
+
 	const onPickerChange = (val) => {
-		
+
 	}
 </script>
 
 <style scoped lang="scss">
 	.page-container {
 		background-color: #f8f8f8;
-		padding-bottom: 160rpx;
+		padding-bottom: 120rpx;
 	}
 
 	.goods-card {
@@ -361,6 +415,7 @@
 		justify-content: space-between;
 		align-items: center;
 		border-top: 1px solid #eee;
+		padding: 10rpx 200rpx;
 	}
 
 	.desc-container {
@@ -378,6 +433,73 @@
 	}
 
 
+	.care-container{
+		padding: 20rpx;
+		min-height: 400rpx;
+		.care-title{
+			text-align: center;
+			font-size: 32rpx;
+			font-weight: 500;
+			color: #354D6E;
+			margin-bottom: 20rpx;
+		}
+		
+		.care-item{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 2rpx #eee solid;
+			padding: 20rpx 0;
+			.item-l{
+				font-size: 28rpx;
+				color: #354D6E;
+				font-weight: 500;
+				display: flex;
+				align-items: center;
+				gap: 12rpx;
+				flex-shrink: 0;
+				.idx{
+					width: 100rpx;
+				}
+				.logo{
+					width: 80rpx;
+					height: 80rpx;
+					background: #FFB10C;
+					border-radius: 50%;
+				}
+			}
+			.item-c{
+				font-size: 24rpx;
+				flex: 1;
+				color: #354D6E;
+				font-weight: 500;
+				padding-left: 20rpx;
+			}
+			.item-r{
+				display: flex;
+				align-items: center;
+				flex-shrink: 0;
+				.see-btn{
+					background: #FFB10C;
+					padding: 10rpx 30rpx;
+					border-radius: 40rpx;
+					color: #fff;
+					font-size: 24rpx;
+				}
+			}
+		}
+		.loading-container{
+			display: flex;
+			justify-content: center;
+			padding: 120rpx;
+		}
+		.empty{
+			padding: 50rpx 100rpx;
+			text-align: center;
+			font-size: 24rpx;
+			color: #999;
+		}
+	}
 	.total {
 		font-weight: bold;
 		font-size: 16px;
