@@ -11,3 +11,88 @@
 .cn{
 	color: rgba(53, 77, 110, 1);
 }
+
+.multi-line-value {
+  white-space: normal;
+  word-break: break-all;
+  line-height: 1.6;
+}
+
+.text-primary{
+	color: #354D6E;
+}
+
+.text-ple{
+	color: #c0c4cc;
+}
+
+.font24{
+	font-size: 24rpx;
+	font-weight: 500;
+}
+
+.font28{
+	font-size: 28rpx;
+	font-weight: 500;
+}
+
+.font32{
+	font-size: 32rpx;
+	font-weight: 500;
+}
+
+.fontW400{
+	font-weight: 400;
+}
+
+.fontW600{
+	font-weight: 600;
+}
+
+.maxW50{
+	max-width:50%;
+}
+
+.text-right{
+	text-align: right;
+}
+
+.con-btn{
+	padding: 10rpx 40rpx;
+	border-radius: 40rpx;
+	color: #fff;
+	font-size: 24rpx;
+	font-weight: 500;
+}
+
+.del-btn{
+	background: #FF4B4B;
+}
+
+.edit-btn{
+	background: #5197F7;
+}
+
+.sel-btn,.add-btn{
+	background: #FEE126;
+	color: #000;
+}
+
+.add-btn{
+	border-radius: 20rpx;
+}
+
+.not-empty{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 200rpx;
+	font-size: 28rpx;
+	color: #999;
+}
+
+.cust-modal-btn-group{
+	display: flex;
+	align-items: center;
+	gap: 40rpx;
+}

@@ -95,7 +95,6 @@
 		.address-item {
 			background: #fff;
 			margin-bottom: 20rpx;
-
 			.info {
 				border-bottom: 2rpx #ddd solid;
 				padding: 20rpx;

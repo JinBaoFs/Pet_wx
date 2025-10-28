@@ -56,6 +56,18 @@
 					"style": {
 						"navigationBarTitleText": "添加地址"
 					}
+				},
+				{
+					"path": "petlist",
+					"style": {
+						"navigationBarTitleText": "我的宠物"
+					}
+				},
+				{
+					"path": "addPet",
+					"style": {
+						"navigationBarTitleText": "添加宠物"
+					}
 				}
 			]
 		}
