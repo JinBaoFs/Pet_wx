@@ -16,13 +16,17 @@
 					<image class="icon" src="/static/images/wallet.png" mode="widthFix" />
 					<text class="title font28">我的订单</text>
 				</view>
-				<text class="more" @click="goToOrders">查看全部订单 ></text>
+				<view class="header-r">
+					<text class="more" @click="goToOrders">全部</text>
+					<up-icon name="arrow-right" size="28rpx" color="#354D6E" top="2rpx"></up-icon>
+				</view>
+				
 			</view>
 			<view class="order-status">
 				<view class="status-item" v-for="item in orderList" :key="item.text">
 					<view class="img-box">
 						<image :src="item.icon" class="status-icon" />
-						<view class="round-tips">2</view>
+						<view class="round-tips" v-if="item.num">{{item.num}}</view>
 					</view>
 					<text class="status-text">{{ item.text }}</text>
 				</view>
@@ -32,11 +36,17 @@
 		<!-- 功能菜单 -->
 		<view class="section">
 			<view class="menu-item" v-for="item in menuList" :key="item.text" @click="item.action">
-				<image class="menu-icon" :src="item.icon" />
-				<text class="menu-text">{{ item.text }}</text>
+				<view class="item-l">
+					<image class="menu-icon" :src="item.icon" />
+					<text class="menu-text">{{ item.text }}</text>
+				</view>
+				<up-icon name="arrow-right" size="28rpx" color="#354D6E" top="2rpx"></up-icon>
 			</view>
 		</view>
 
+		<view class="login-out">
+			<u-button type="primary" color="#EBEBEB" :customStyle="{color: '#000', fontWeight: 500}">退出登录</u-button>
+		</view>
 		<CustomTabbar :current="2" />
 	</view>
 </template>
@@ -55,11 +65,13 @@ const user = reactive({
 const orderList = ref([
 	{
 		icon: '/static/images/order-01.png',
-		text: '待付款'
+		text: '待付款',
+		num: 2,
 	},
 	{
 		icon: '/static/images/order-02.png',
-		text: '待服务'
+		text: '待服务',
+		num: 1,
 	},
 	{
 		icon: '/static/images/order-03.png',
@@ -77,24 +89,38 @@ const orderList = ref([
 
 const menuList = ref([
 	{
-		icon: '/static/menu/address.png',
-		text: '收货地址',
+		icon: '/static/images/menu-01.png',
+		text: '我的宠物',
 		action: () => uni.navigateTo({
-			url: '/pages/address/index'
+			url: '/pages/user/petlist'
 		})
 	},
 	{
-		icon: '/static/menu/service.png',
+		icon: '/static/images/menu-02.png',
+		text: '地址管理',
+		action: () => uni.navigateTo({
+			url: '/pages/user/address'
+		})
+	},
+	{
+		icon: '/static/images/menu-03.png',
 		text: '联系客服',
 		action: () => uni.makePhoneCall({
 			phoneNumber: '10086'
 		})
 	},
 	{
-		icon: '/static/menu/about.png',
-		text: '关于我们',
+		icon: '/static/images/menu-04.png',
+		text: '意见反馈',
 		action: () => uni.navigateTo({
-			url: '/pages/about/index'
+			url: '/pages/user/address'
+		})
+	},
+	{
+		icon: '/static/images/menu-05.png',
+		text: '关于宠爱Fun',
+		action: () => uni.navigateTo({
+			url: '/pages/user/address'
 		})
 	}
 ])
@@ -102,20 +128,33 @@ const menuList = ref([
 // 方法
 const goToOrders = () => {
 	uni.navigateTo({
-		url: '/pages/order/list'
+		url: '/pages/user/orderList'
 	})
+}
+
+const onLogin = async () => {
+  const { code } = await wx.login()
+  const profile = await wx.getUserProfile({ desc: '用于完善资料' })
+  const res = await uni.request({
+    url: 'https://yourapi.com/login',
+    method: 'POST',
+    data: { code, ...profile.userInfo }
+  })
 }
 </script>
 
 <style scoped lang="scss">
-.my-page {
+page {
 	background-color: #f8f8f8;
-	min-height: 100vh;
+}
+
+.my-page{
+	padding-bottom: 100rpx;
 }
 
 .user-info {
 	background: #fff;
-	padding: 40rpx;
+	padding: 30rpx 40rpx;
 	display: flex;
 	align-items: center;
 	gap: 20rpx;
@@ -161,15 +200,17 @@ const goToOrders = () => {
 			color: #020202;
 		}
 	}
+	.header-r{
+		display: flex;
+		align-items: center;
+		gap: 8rpx;
+		.more {
+			color: #999;
+			font-size: 28rpx;
+			font-weight: 400;
+		}
+	}
 }
-
-
-
-.more {
-	color: #999;
-	font-size: 26rpx;
-}
-
 .order-status {
 	display: flex;
 	justify-content: space-between;
@@ -215,17 +256,34 @@ const goToOrders = () => {
 .menu-item {
 	display: flex;
 	align-items: center;
-	padding: 20rpx 0;
+	padding: 36rpx 40rpx;
 	border-bottom: 1px solid #f1f1f1;
+	justify-content: space-between;
+	.item-l{
+		display: flex;
+		align-items: center;
+	}
+	background: #fff;
+	&:last-child{
+		border: none;
+	}
+	.menu-icon {
+		width: 48rpx;
+		height: 48rpx;
+		margin-right: 20rpx;
+	}
+	
+	.menu-text {
+		font-size: 28rpx;
+		color: #020202;
+		font-weight: 500;
+	}
 }
 
-.menu-icon {
-	width: 40rpx;
-	height: 40rpx;
-	margin-right: 20rpx;
+.login-out{
+	margin-top: 40rpx;
+	padding: 0 100rpx;
 }
 
-.menu-text {
-	font-size: 28rpx;
-}
+
 </style>

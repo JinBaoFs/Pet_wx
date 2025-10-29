@@ -293,7 +293,7 @@
 	// 选择宠物
 	const choosePet = () => {
 		uni.navigateTo({
-			url: '/pages/user/petlist?type=1',
+			url: '/pages/user/petList?type=1',
 			success: (res) => {
 				// 接收从子页返回的数据
 				res.eventChannel.on('returnPet', (data) => {

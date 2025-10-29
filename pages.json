@@ -58,7 +58,7 @@
 					}
 				},
 				{
-					"path": "petlist",
+					"path": "petList",
 					"style": {
 						"navigationBarTitleText": "我的宠物"
 					}
@@ -67,6 +67,12 @@
 					"path": "addPet",
 					"style": {
 						"navigationBarTitleText": "添加宠物"
+					}
+				},
+				{
+					"path": "orderList",
+					"style": {
+						"navigationBarTitleText": "我的订单"
 					}
 				}
 			]
