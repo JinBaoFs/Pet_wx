@@ -74,6 +74,12 @@
 					"style": {
 						"navigationBarTitleText": "我的订单"
 					}
+				},
+				{
+					"path": "orderDetail",
+					"style": {
+						"navigationBarTitleText": "订单详情"
+					}
 				}
 			]
 		}

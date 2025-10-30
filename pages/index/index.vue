@@ -18,8 +18,8 @@ import { useUserStore } from '@/stores/user'
 
 // 响应式数据
 const list = ref([
-  { url: '/static/tabbar/list-01.png' },
-  { url: '/static/tabbar/list-02.png' }
+  { url: '/static/images/list-01.png' },
+  { url: '/static/images/list-02.png' }
 ])
 
 // 生命周期函数

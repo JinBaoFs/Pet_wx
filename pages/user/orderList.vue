@@ -6,7 +6,7 @@
 
 		<!-- 订单列表 -->
 		<scroll-view scroll-y class="order-list">
-			<view v-for="item in filteredList" :key="item.id" class="order-card">
+			<view v-for="item in filteredList" :key="item.id" class="order-card" @click="handleToDetail(item)">
 				<view class="order-header">
 					<view class="order-header-left">
 						<view class="order-shop">{{ item.shop }}</view>
@@ -18,7 +18,7 @@
 				</view>
 
 				<view class="order-body">
-					<image src="/static/tabbar/list-01.png" mode="widthFix" class="goods-img"></image>
+					<image src="/static/images/list-01.png" mode="widthFix" class="goods-img"></image>
 					<view class="order-info">
 						<view class="order-title">{{ item.title }}</view>
 						<view class="order-desc">{{ item.desc }}</view>
@@ -171,6 +171,12 @@
 	const changeTab = (e) => {
 		currentTab.value = e.index
 	}
+	
+	const handleToDetail = (item) =>{
+		uni.navigateTo({
+			url: `/pages/user/orderDetail?id=${item.id}`
+		})
+	}
 </script>
 
 <style scoped lang="scss">
@@ -204,6 +210,9 @@
 				justify-content: space-between;
 				align-items: center;
 				gap: 20rpx;
+				.order-no{
+					color:#354D6E;
+				}
 			}
 
 			.order-shop {

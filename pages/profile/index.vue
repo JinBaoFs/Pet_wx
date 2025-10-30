@@ -92,7 +92,7 @@ const menuList = ref([
 		icon: '/static/images/menu-01.png',
 		text: '我的宠物',
 		action: () => uni.navigateTo({
-			url: '/pages/user/petlist'
+			url: '/pages/user/petList'
 		})
 	},
 	{

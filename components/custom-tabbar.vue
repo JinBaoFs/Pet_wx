@@ -3,7 +3,7 @@
 		<view class="tabbar-item" :class="current === 0 ? 'tabbar-item-active' : ''" @click="switchTab('/pages/index/index')">
 			<view class="tabbar-item-container">
 				<view class="image-box">
-					<image class="icon" src="/static/tabbar/home.png" mode="widthFix" />
+					<image class="icon" src="/static/images/home.png" mode="widthFix" />
 				</view>
 				<text>首页</text>
 			</view>
@@ -11,7 +11,8 @@
 		<view class="tabbar-item" :class="current === 1 ? 'tabbar-item-active' : ''" @click="switchTab('/pages/care/index')">
 			<view class="tabbar-item-container">
 				<view class="img-center-box">
-					<image class="icon" src="/static/tabbar/care.png" mode="widthFix" />
+					<image class="icon" src="/static/images/care.png" v-if="current != 1" mode="widthFix" />
+					<image class="icon" src="/static/images/care-active.png" v-else mode="widthFix" />
 				</view>
 				<text>洗护师</text>
 			</view>
@@ -19,7 +20,7 @@
 		<view class="tabbar-item" :class="current === 2 ? 'tabbar-item-active' : ''" @click="switchTab('/pages/profile/index')">
 			<view class="tabbar-item-container">
 				<view class="image-box">
-					<image class="icon" src="/static/tabbar/my.png" mode="widthFix" />
+					<image class="icon" src="/static/images/my.png" mode="widthFix" />
 				</view>
 				<text>我的</text>
 			</view>
@@ -92,7 +93,7 @@
 		.image-box{
 			width: 78rpx;
 			height: 78rpx;
-			background:url("/static/tabbar/btn-bg.png") no-repeat;
+			background:url("/static/images/btn-bg.png") no-repeat;
 			background-size: cover;
 			background-position: center;
 			

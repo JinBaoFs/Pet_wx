@@ -25,7 +25,7 @@
 			</view>
 			<picker :range="PET_CAT_TYPE_OPTIONS" range-key="label" @change="(e) => onPickerChange(e,'type',PET_CAT_TYPE_OPTIONS)">
 				<view class="pet-item">
-					<view class="item-label">*宠物品种</view>
+					<view class="item-label">*宠物品种:</view>
 					<view class="picker-container">
 						<text class="font24" :class="PET_CAT_TYPE_TEXT[pageData.type] ? 'text-primary' : 'text-ple'">{{PET_CAT_TYPE_TEXT[pageData.type] || '请选择'}}</text>
 						<up-icon name="arrow-down" size="24rpx" color="#999"></up-icon>
@@ -128,7 +128,7 @@
 
 <style lang="scss" scoped>
 	page {
-		background: rgba(248, 248, 248, 1);
+		background-color: #f8f8f8;
 	}
 	
 	.add-pet{

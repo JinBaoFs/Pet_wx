@@ -102,7 +102,7 @@
 
 <style lang="scss" scoped>
 	page {
-		background: rgba(248, 248, 248, 1);
+		background-color: #f8f8f8;
 	}
 	.add-box{
 		.contact{
