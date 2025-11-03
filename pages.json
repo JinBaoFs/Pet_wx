@@ -19,9 +19,8 @@
 		{
 			"path": "pages/care/index",
 			"style": {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "洗护师",
+				"navigationBarBackgroundColor": "#ffffff"
 			}
 		}
 	],
@@ -79,6 +78,17 @@
 					"path": "orderDetail",
 					"style": {
 						"navigationBarTitleText": "订单详情"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/carepg",
+			"pages": [
+				{
+					"path": "wallet",
+					"style": {
+						"navigationBarTitleText": "我的钱包"
 					}
 				}
 			]
