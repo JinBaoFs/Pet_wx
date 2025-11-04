@@ -29,7 +29,7 @@
 				</view>
 				<view class="item">
 					<view class="item-l">
-						<image src="/static/images/wallet.png" mode="widthFix"></image>
+						<image src="/static/images/care-02.png" mode="widthFix"></image>
 						<view class="label">我的保证金</view>
 					</view>
 					<view class="item-r">
@@ -40,7 +40,7 @@
 				</view>
 				<view class="item">
 					<view class="item-l">
-						<image src="/static/images/wallet.png" mode="widthFix"></image>
+						<image src="/static/images/care-03.png" mode="widthFix"></image>
 						<view class="label">我的洗护订单</view>
 					</view>
 					<view class="item-r">
@@ -50,7 +50,7 @@
 				</view>
 				<view class="item">
 					<view class="item-l">
-						<image src="/static/images/wallet.png" mode="widthFix"></image>
+						<image src="/static/images/care-04.png" mode="widthFix"></image>
 						<view class="label">我的健康证</view>
 					</view>
 					<view class="item-r">
@@ -61,7 +61,7 @@
 				</view>
 				<view class="item">
 					<view class="item-l">
-						<image src="/static/images/wallet.png" mode="widthFix"></image>
+						<image src="/static/images/care-05.png" mode="widthFix"></image>
 						<view class="label">接单设置</view>
 					</view>
 					<view class="item-r">
@@ -70,7 +70,7 @@
 				</view>
 				<view class="item">
 					<view class="item-l">
-						<image src="/static/images/wallet.png" mode="widthFix"></image>
+						<image src="/static/images/care-06.png" mode="widthFix"></image>
 						<view class="label">联系客服</view>
 					</view>
 					<view class="item-r">
@@ -85,7 +85,7 @@
 			<view class="status-item" v-if="pageData.careStatus == 1">
 				<text class="text-primary status-text">您还不是洗护师</text>
 				<text class="text-tips">可以点击申请成为洗护师，开始接单上门洗护</text>
-				<u-button type="primary" color="#FEE126" :customStyle="{color: '#000', fontWeight: 500}" class="btn">申请成为洗护师</u-button>
+				<u-button type="primary" color="#FEE126" :customStyle="{color: '#000', fontWeight: 500}" class="btn" @click="handleToApply">申请成为洗护师</u-button>
 			</view>	
 			<view class="status-item" v-if="pageData.careStatus == 2">
 				<text class="text-green status-text">洗护师申请中</text>
@@ -107,8 +107,8 @@
 	import CustomTabbar from "@/components/custom-tabbar.vue";
 	import { reactive } from "vue";
 	const pageData = reactive({
-		showCare: true,
-		careStatus: 3,
+		showCare: false,
+		careStatus: 1,
 		isJk: false,
 		deposit: 500.00,
 	})
@@ -117,6 +117,11 @@
 		uni.navigateTo({
 			url:'/pages/carepg/wallet'
 		})
+	}
+	
+	const handleToApply = (type) => {
+		const url = type ? `/pages/carepg/apply?type=${1}` : '/pages/carepg/apply'
+		uni.navigateTo({ url })
 	}
 </script>
 

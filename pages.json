@@ -90,6 +90,12 @@
 					"style": {
 						"navigationBarTitleText": "我的钱包"
 					}
+				},
+				{
+					"path": "apply",
+					"style": {
+						"navigationBarTitleText": "洗护师申请"
+					}
 				}
 			]
 		}

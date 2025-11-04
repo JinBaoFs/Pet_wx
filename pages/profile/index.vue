@@ -1,7 +1,7 @@
 <template>
 	<view class="my-page">
 		<!-- 顶部用户信息 -->
-		<view class="user-info">
+		<view class="user-info" :style="navStyle">
 			<image class="avatar" :src="user.avatar" />
 			<view class="desc-box text-primary">
 				<text class="nickname">{{ user.nickname }}</text>
@@ -52,8 +52,16 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import CustomTabbar from "@/components/custom-tabbar.vue";
+import { ref, reactive, computed } from 'vue'
+import CustomTabbar from "@/components/custom-tabbar.vue"
+import { useSystemInfo } from '@/common/hooks/useSystemInfo.js'
+
+const { statusBarHeight, navBarHeight } = useSystemInfo()
+
+const navStyle = computed(() => ({
+  paddingTop: `${statusBarHeight.value}px`,
+  height: `${statusBarHeight.value + navBarHeight.value}px`,
+}))
 
 // 响应式数据
 const user = reactive({
