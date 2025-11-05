@@ -49,7 +49,7 @@
 	
 	
 	const infoData = ref({
-		url: '/static/tabbar/list-01.png',
+		url: '/static/images/list-01.png',
 		title: '猫猫上门洗护',
 		goodsId: 756,
 		configs: [
@@ -148,6 +148,7 @@
 			flex-direction: column;
 			align-items: center;
 			gap: 30rpx;
+			background: #fff;
 			.title{
 				font-size: 28rpx;
 				color: rgba(53, 77, 110, 1);

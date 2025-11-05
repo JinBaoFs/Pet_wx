@@ -20,7 +20,7 @@
 						</up-checkbox-group>
 					</view>
 					<view class="tool-r">
-						<view class="t-btn del-btn" v-if="!type">删除</view>
+						<view class="t-btn del-btn" v-if="!type" @click="handleDeletAddress">删除</view>
 						<view class="t-btn edit-btn" v-if="!type">修改</view>
 						<view class="t-btn sel-btn" v-if="type" @click="selectAddress(item)">选择</view>
 					</view>
@@ -81,6 +81,12 @@
 		uni.navigateTo({
 			url: '/pages/user/addAddress'
 		})
+	}
+	
+	const handleDeletAddress = (item) => {
+		console.log(item)
+		rowData.value = {...item}
+		modalShow.value = true
 	}
 </script>
 

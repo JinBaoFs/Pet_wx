@@ -99,6 +99,32 @@
 				<u-button type="primary" color="#FEE126" :customStyle="{color: '#000', fontWeight: 500}" class="btn">重新申请洗护师</u-button>
 			</view>	
 		</view>
+		<up-modal title="温馨提示" contentTextAlign="center" :showCancelButton="true" content="健康证用于洗护师接单保证，您的健康证已过期，请重新上传有效的健康证方可开启接单，感谢您的理解!" :show="pageData.healthyShow" ref="uModal" :asyncClose="true">
+			<template #confirmButton>
+				<view class="cust-modal-btn-group">
+					<u-button 
+						plain 
+						type="primary" 
+						color="#FEE126" 
+						:customStyle="{color: '#000', fontWeight: 500}" 
+						shape="circle"
+						@click="pageData.healthyShow = false"
+					>
+						取消
+					</u-button>
+					<u-button 
+						type="primary" 
+						color="#FEE126" 
+						:customStyle="{color: '#000', fontWeight: 500}" 
+						shape="circle" 
+						@click="handleToPath('/pages/carepg/apply?type=1')"
+						loading-color="#000000"
+					>
+						确定
+					</u-button>
+				</view>
+			</template>
+		</up-modal>
 		<custom-tabbar :current="1" />
 	</view>
 </template>
@@ -111,6 +137,7 @@
 		careStatus: 1,
 		isJk: false,
 		deposit: 500.00,
+		healthyShow: true
 	})
 	
 	const handleToWallet = () => {
@@ -121,6 +148,10 @@
 	
 	const handleToApply = (type) => {
 		const url = type ? `/pages/carepg/apply?type=${1}` : '/pages/carepg/apply'
+		uni.navigateTo({ url })
+	}
+	
+	const handleToPath = (url) => {
 		uni.navigateTo({ url })
 	}
 </script>

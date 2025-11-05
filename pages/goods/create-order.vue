@@ -4,7 +4,7 @@
 		<!-- 顶部商品信息 -->
 		<view class="goods-card">
 			<view class="goods-info">
-				<image src="/static/tabbar/list-01.png" mode="widthFix" class="goods-img"></image>
+				<image src="/static/images/list-01.png" mode="widthFix" class="goods-img"></image>
 				<view class="goods-text">
 					<view class="goods-title">猫猫上门洗护</view>
 					<view class="goods-subtitle">已选：普通洗护，{{createOrderStore.orderInfo.weightLabel}}</view>
